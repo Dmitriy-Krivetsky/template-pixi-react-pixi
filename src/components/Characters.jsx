@@ -22,6 +22,14 @@ export const Characters = () => {
                 const { direction: newDirection, shouldSplit } = checkCollision(character);
                 const {position, direction} = character;
 
+                if (!MAX_CHARACTERS && newCharactersList.length <= 2) {
+                    if (newCharactersList[0]) {
+                        newListPuf.push(getNewPuf({ character: newCharactersList[0] }));
+                    }
+                    newCharactersList = []
+                    return;
+                }
+
                 newCharactersList[index] = {
                     ...character,
                     position: {
@@ -32,11 +40,6 @@ export const Characters = () => {
                 }
 
                 if (!shouldSplit) return;
-                if (!MAX_CHARACTERS && newCharactersList.length <= 2) {
-                    newListPuf.push(getNewPuf({ character: newCharactersList[0] }));
-                    newCharactersList = []
-                    return;
-                }
 
                 const listIsFull = newCharactersList.length - sliceCount === MAX_CHARACTERS;
                 const listIsOverfull = newCharactersList.length - sliceCount > MAX_CHARACTERS;
